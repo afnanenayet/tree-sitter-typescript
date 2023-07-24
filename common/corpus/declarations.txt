@@ -125,7 +125,7 @@ declare module Foo {
 
   (ambient_declaration
     (module
-      name: (nested_identifier (identifier) (identifier))
+      name: (nested_identifier (identifier) (property_identifier))
       body: (statement_block
         (export_statement
           declaration: (variable_declaration (variable_declarator name: (identifier)))))))
@@ -320,7 +320,7 @@ import r = X.N;
 ---
 
 (program
-  (import_alias (identifier) (nested_identifier (identifier) (identifier))))
+  (import_alias (identifier) (nested_identifier (identifier) (property_identifier))))
 
 ==================================
 Import aliases in modules
@@ -334,7 +334,7 @@ module C {
 
 (program
   (module (identifier) (statement_block
-		(import_alias (identifier) (nested_identifier (identifier) (identifier))))))
+		(import_alias (identifier) (nested_identifier (identifier) (property_identifier))))))
 
 ==================================
 Export import aliases
@@ -457,6 +457,7 @@ Type casts
 
 foo as any as Array<number>
 bar satisfies number[]
+"foobar" as const
 
 ---
 
@@ -466,7 +467,11 @@ bar satisfies number[]
       (as_expression (identifier) (predefined_type))
       (generic_type (type_identifier) (type_arguments (predefined_type)))))
   (expression_statement
-    (satisfies_expression (identifier) (array_type (predefined_type)))))
+    (satisfies_expression (identifier) (array_type (predefined_type))))
+  (expression_statement
+    (as_expression
+      (string
+        (string_fragment)))))
 
 =================================
 Ambient export function declarations
